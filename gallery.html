@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерея — Відомі Боксери України ⚔️</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Roboto', system-ui, sans-serif;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -4px;
+            left: 0;
+            background-color: #FFD700;
+            transition: width 0.4s ease;
+        }
+        
+        .nav-link:hover:after,
+        .nav-link.active:after {
+            width: 100%;
+        }
+        
+        .gallery-img {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+        
+        .gallery-img:hover img {
+            transform: scale(1.15);
+        }
+        
+        .gallery-img:hover .overlay {
+            opacity: 1;
+        }
+        
+        .modal {
+            animation: modalPop 0.4s ease forwards;
+        }
+        
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.85); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-white">
+
+    <!-- NAVBAR -->
+    <nav class="bg-black/95 backdrop-blur-lg border-b border-yellow-400 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="flex items-center gap-3 hover:scale-105 transition">
+                    <div class="w-11 h-11 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-2xl flex items-center justify-center text-3xl">🥊</div>
+                    <h1 class="text-2xl font-bold tracking-tighter" style="font-family: 'Anton', sans-serif;">УКРАЇНСЬКИЙ БОКС</h1>
+                </a>
+            </div>
+
+            <div class="hidden md:flex items-center gap-10 text-lg font-medium">
+                <a href="index.html" class="nav-link hover:text-yellow-400">Головна</a>
+                <a href="boxers.html" class="nav-link hover:text-yellow-400">Боксери</a>
+                <a href="history.html" class="nav-link hover:text-yellow-400">Історія</a>
+                <a href="videos.html" class="nav-link hover:text-yellow-400">Відео</a>
+                <a href="gallery.html" class="nav-link text-yellow-400 active">Галерея</a>
+            </div>
+
+            <button onclick="playRingBell()" 
+                    class="flex items-center gap-3 bg-yellow-400 hover:bg-amber-300 text-black px-6 py-3 rounded-3xl font-bold">
+                <i class="fas fa-bell"></i>
+                <span class="hidden sm:inline">Дзвін рингу</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <section class="bg-gradient-to-r from-zinc-900 to-black py-20">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h1 class="text-6xl md:text-7xl font-black tracking-tighter mb-4" style="font-family: 'Anton', sans-serif;">
+                ГАЛЕРЕЯ
+            </h1>
+            <p class="text-2xl text-yellow-400">Незабутні моменти українського боксу</p>
+        </div>
+    </section>
+
+    <!-- ГАЛЕРЕЯ -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="galleryGrid">
+                <!-- Фото заповнюються через JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- МОДАЛЬНЕ ВІКНО ДЛЯ ПЕРЕГЛЯДУ ФОТО -->
+    <div id="imageModal" class="hidden fixed inset-0 bg-black/95 z-[200] flex items-center justify-center p-6">
+        <div class="modal max-w-4xl w-full relative">
+            <button onclick="closeImageModal()" 
+                    class="absolute -top-12 right-0 text-white text-5xl hover:text-yellow-400 transition">
+                &times;
+            </button>
+            <img id="modalImage" src="" alt="" 
+                 class="w-full rounded-3xl shadow-2xl">
+            <div id="modalCaption" class="text-center mt-6 text-xl text-yellow-300"></div>
+        </div>
+    </div>
+
+    <footer class="bg-black py-12 border-t border-yellow-400">
+        <div class="max-w-7xl mx-auto px-6 text-center text-zinc-500">
+            <p>Слава Україні! 🥊🇺🇦</p>
+            <p class="text-xs mt-3">Галерея оновлена: 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        // Масив з фотографіями (можеш замінити посилання на свої)
+        const photos = [
+            {
+                url: "https://picsum.photos/id/1015/1200/800",
+                caption: "Олександр Усик підіймає пояс після перемоги над Тайсоном Ф'юрі • 2024"
+            },
+            {
+                url: "https://picsum.photos/id/1005/1200/800",
+                caption: "Василь Ломаченко в action • Найкраща техніка в світі"
+            },
+            {
+                url: "https://picsum.photos/id/160/1200/800",
+                caption: "Віталій Кличко • Легендарний чемпіон WBC"
+            },
+            {
+                url: "https://picsum.photos/id/201/1200/800",
+                caption: "Володимир Кличко • Доктор Сталевий Молот"
+            },
+            {
+                url: "https://picsum.photos/id/237/1200/800",
+                caption: "Усик святкує перемогу • Абсолютний чемпіон"
+            },
+            {
+                url: "https://picsum.photos/id/870/1200/800",
+                caption: "Український прапор у рингу • Слава Україні!"
+            },
+            {
+                url: "https://picsum.photos/id/1016/1200/800",
+                caption: "Ломаченко на тренуванні"
+            },
+            {
+                url: "https://picsum.photos/id/133/1200/800",
+                caption: "Клички разом • Історичний момент"
+            }
+        ];
+
+        function initGallery() {
+            const grid = document.getElementById('galleryGrid');
+            grid.innerHTML = '';
+
+            photos.forEach((photo, index) => {
+                const div = document.createElement('div');
+                div.className = `gallery-img relative rounded-3xl overflow-hidden cursor-pointer shadow-xl`;
+                div.innerHTML = `
+                    <img src="${photo.url}" alt="${photo.caption}" 
+                         class="w-full h-full object-cover aspect-[4/3]">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 flex items-end p-6">
+                        <p class="text-white text-sm leading-tight">${photo.caption}</p>
+                    </div>
+                `;
+                div.onclick = () => showImageModal(photo.url, photo.caption);
+                grid.appendChild(div);
+            });
+        }
+
+        function showImageModal(url, caption) {
+            document.getElementById('modalImage').src = url;
+            document.getElementById('modalCaption').textContent = caption;
+            document.getElementById('imageModal').classList.remove('hidden');
+            document.getElementById('imageModal').classList.add('flex');
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function playRingBell() {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.frequency.value = 220;
+            gain.gain.value = 1;
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.5);
+            osc.start();
+            osc.stop(ctx.currentTime + 1.8);
+        }
+
+        // Ініціалізація
+        window.onload = function() {
+            initGallery();
+            console.log('%c✅ Галерея завантажена успішно! 🖼️', 'color:#FFD700; font-size:18px');
+        };
+    </script>
+</body>
+</html>
