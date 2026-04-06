@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Боксери — Відомі Боксери України ⚔️</title>
-    
+   
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+   
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@400;700&display=swap');
-        
+       
         body {
             font-family: 'Roboto', system-ui, sans-serif;
         }
-        
+       
         .nav-link {
             position: relative;
         }
-        
+       
         .nav-link:after {
             content: '';
             position: absolute;
@@ -29,93 +29,109 @@
             background-color: #FFD700;
             transition: width 0.4s ease;
         }
-        
+       
         .nav-link:hover:after,
         .nav-link.active:after {
             width: 100%;
         }
-        
+       
         .boxer-card {
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+       
         .boxer-card:hover {
-            transform: translateY(-20px) scale(1.05);
-            box-shadow: 0 30px 60px -15px rgb(255 215 0 / 0.5);
+            transform: translateY(-12px) scale(1.04);
+            box-shadow: 0 25px 50px -15px rgb(255 215 0 / 0.5);
         }
-        
+       
         .modal {
             animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        
+       
         @keyframes modalPop {
-            from {
-                opacity: 0;
-                transform: scale(0.8) translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+            from { opacity: 0; transform: scale(0.85) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
     </style>
 </head>
-<body class="bg-zinc-950 text-white">
+<body class="bg-zinc-950 text-white overflow-x-hidden">
 
     <!-- NAVBAR -->
     <nav class="bg-black/95 backdrop-blur-lg border-b border-yellow-400 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-            <div class="flex items-center gap-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+            <div class="flex items-center justify-between">
                 <a href="index.html" class="flex items-center gap-3 hover:scale-105 transition">
                     <div class="w-11 h-11 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-2xl flex items-center justify-center text-3xl">🥊</div>
                     <h1 class="text-2xl font-bold tracking-tighter" style="font-family: 'Anton', sans-serif;">УКРАЇНСЬКИЙ БОКС</h1>
                 </a>
+
+                <!-- Десктоп меню -->
+                <div class="hidden md:flex items-center gap-8 text-base font-medium">
+                    <a href="index.html" class="nav-link hover:text-yellow-400">Головна</a>
+                    <a href="boxers.html" class="nav-link text-yellow-400 active">Боксери</a>
+                    <a href="history.html" class="nav-link hover:text-yellow-400">Історія</a>
+                    <a href="videos.html" class="nav-link hover:text-yellow-400">Відео</a>
+                    <a href="gallery.html" class="nav-link hover:text-yellow-400">Галерея</a>
+                </div>
+
+                <button onclick="playRingBell()" 
+                        class="hidden sm:flex items-center gap-2 bg-yellow-400 hover:bg-amber-300 text-black px-6 py-3 rounded-3xl font-bold shadow-lg active:scale-95 transition-all">
+                    <i class="fas fa-bell"></i>
+                    <span>Дзвін рингу</span>
+                </button>
+
+                <!-- Мобільне меню кнопка -->
+                <button id="mobile-menu-button" class="md:hidden text-3xl text-yellow-400">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
 
-            <div class="hidden md:flex items-center gap-10 text-lg font-medium">
-                <a href="index.html" class="nav-link hover:text-yellow-400">Головна</a>
-                <a href="boxers.html" class="nav-link text-yellow-400 active">Боксери</a>
-                <a href="history.html" class="nav-link hover:text-yellow-400">Історія</a>
-                <a href="videos.html" class="nav-link hover:text-yellow-400">Відео</a>
-                <a href="gallery.html" class="nav-link hover:text-yellow-400">Галерея</a>
+            <!-- Мобільне меню -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pt-4 border-t border-yellow-400/30">
+                <div class="flex flex-col gap-4 text-lg">
+                    <a href="index.html" class="py-2 hover:text-yellow-400">Головна</a>
+                    <a href="boxers.html" class="py-2 text-yellow-400">Боксери</a>
+                    <a href="history.html" class="py-2 hover:text-yellow-400">Історія</a>
+                    <a href="videos.html" class="py-2 hover:text-yellow-400">Відео</a>
+                    <a href="gallery.html" class="py-2 hover:text-yellow-400">Галерея</a>
+                </div>
+                <button onclick="playRingBell()" 
+                        class="mt-6 w-full bg-yellow-400 text-black py-4 rounded-3xl font-bold flex items-center justify-center gap-3">
+                    <i class="fas fa-bell"></i>
+                    <span>Дзвін рингу</span>
+                </button>
             </div>
-
-            <button onclick="playRingBell()" 
-                    class="flex items-center gap-3 bg-yellow-400 hover:bg-amber-300 text-black px-6 py-3 rounded-3xl font-bold">
-                <i class="fas fa-bell"></i>
-                <span class="hidden sm:inline">Дзвін рингу</span>
-            </button>
         </div>
     </nav>
 
     <!-- HEADER -->
-    <section class="bg-gradient-to-r from-zinc-900 to-black py-20">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h1 class="text-6xl md:text-7xl font-black tracking-tighter mb-4" style="font-family: 'Anton', sans-serif;">
+    <section class="bg-gradient-to-r from-zinc-900 to-black py-16 md:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter" style="font-family: 'Anton', sans-serif;">
                 НАШІ ЧЕМПІОНИ
             </h1>
-            <p class="text-2xl text-yellow-400">Легенди українського боксу</p>
+            <p class="text-xl md:text-2xl text-yellow-400 mt-3">Легенди українського боксу</p>
         </div>
     </section>
 
     <!-- БОКСЕРИ -->
-    <section class="py-20">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-
+    <section class="py-12 md:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+                
                 <!-- Усик -->
                 <div onclick="showBoxer(1)" class="boxer-card cursor-pointer bg-zinc-900 rounded-3xl overflow-hidden group">
-                    <div class="relative h-96">
-                        <img src="https://www.elitukraine.com/upload/products/2021-11-14/6a76cb0f6d70f544518f737eb0532679.jpeg" alt="Олександр Усик" 
-                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-8">
+                    <div class="relative h-80 md:h-96">
+                        <img src="https://www.elitukraine.com/upload/products/2021-11-14/6a76cb0f6d70f544518f737eb0532679.jpeg" 
+                             alt="Олександр Усик" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                             <div class="flex justify-between items-end">
                                 <div>
-                                    <h3 class="text-4xl font-bold">Олександр Усик</h3>
-                                    <p class="text-yellow-400 text-xl">Тяжка вага • Абсолютний чемпіон</p>
+                                    <h3 class="text-3xl md:text-4xl font-bold">Олександр Усик</h3>
+                                    <p class="text-yellow-400 text-base md:text-xl">Тяжка вага • Абсолютний чемпіон</p>
                                 </div>
-                                <div class="text-6xl">🥇</div>
+                                <div class="text-5xl md:text-6xl">🥇</div>
                             </div>
                         </div>
                     </div>
@@ -123,17 +139,17 @@
 
                 <!-- Ломаченко -->
                 <div onclick="showBoxer(2)" class="boxer-card cursor-pointer bg-zinc-900 rounded-3xl overflow-hidden group">
-                    <div class="relative h-96">
-                        <img src="https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcREi0nOMcFPGknPAw9SWBFpmodjYE1tWzNy77Fi2uqHPSgK4-X8zuFxRn4_LljqzBQariBA7p_exAaVAys" alt="Василь Ломаченко" 
-                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-8">
+                    <div class="relative h-80 md:h-96">
+                        <img src="https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcREi0nOMcFPGknPAw9SWBFpmodjYE1tWzNy77Fi2uqHPSgK4-X8zuFxRn4_LljqzBQariBA7p_exAaVAys" 
+                             alt="Василь Ломаченко" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                             <div class="flex justify-between items-end">
                                 <div>
-                                    <h3 class="text-4xl font-bold">Василь Ломаченко</h3>
-                                    <p class="text-yellow-400 text-xl">Легка вага • Майстер техніки</p>
+                                    <h3 class="text-3xl md:text-4xl font-bold">Василь Ломаченко</h3>
+                                    <p class="text-yellow-400 text-base md:text-xl">Легка вага • Майстер техніки</p>
                                 </div>
-                                <div class="text-6xl">⚡</div>
+                                <div class="text-5xl md:text-6xl">⚡</div>
                             </div>
                         </div>
                     </div>
@@ -141,17 +157,17 @@
 
                 <!-- Віталій Кличко -->
                 <div onclick="showBoxer(3)" class="boxer-card cursor-pointer bg-zinc-900 rounded-3xl overflow-hidden group">
-                    <div class="relative h-96">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsRZKmQTd__Gr6YhKp92cWPMMkxQJETZzpQ&s" alt="Віталій Кличко" 
-                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-8">
+                    <div class="relative h-80 md:h-96">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsRZKmQTd__Gr6YhKp92cWPMMkxQJETZzpQ&s" 
+                             alt="Віталій Кличко" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                             <div class="flex justify-between items-end">
                                 <div>
-                                    <h3 class="text-4xl font-bold">Віталій Кличко</h3>
-                                    <p class="text-yellow-400 text-xl">Тяжка вага • Легенда</p>
+                                    <h3 class="text-3xl md:text-4xl font-bold">Віталій Кличко</h3>
+                                    <p class="text-yellow-400 text-base md:text-xl">Тяжка вага • Легенда</p>
                                 </div>
-                                <div class="text-6xl">🛡️</div>
+                                <div class="text-5xl md:text-6xl">🛡️</div>
                             </div>
                         </div>
                     </div>
@@ -159,43 +175,54 @@
 
                 <!-- Володимир Кличко -->
                 <div onclick="showBoxer(4)" class="boxer-card cursor-pointer bg-zinc-900 rounded-3xl overflow-hidden group">
-                    <div class="relative h-96">
-                        <img src="https://pic.sport.ua/images/news/0/11/115/orig_463005.jpg" alt="Володимир Кличко" 
-                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-8">
+                    <div class="relative h-80 md:h-96">
+                        <img src="https://pic.sport.ua/images/news/0/11/115/orig_463005.jpg" 
+                             alt="Володимир Кличко" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                             <div class="flex justify-between items-end">
                                 <div>
-                                    <h3 class="text-4xl font-bold">Володимир Кличко</h3>
-                                    <p class="text-yellow-400 text-xl">Тяжка вага • Король</p>
+                                    <h3 class="text-3xl md:text-4xl font-bold">Володимир Кличко</h3>
+                                    <p class="text-yellow-400 text-base md:text-xl">Тяжка вага • Король</p>
                                 </div>
-                                <div class="text-6xl">👑</div>
+                                <div class="text-5xl md:text-6xl">👑</div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
     <!-- МОДАЛЬНЕ ВІКНО -->
-    <div id="modal" class="hidden fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-6">
-        <div class="modal bg-zinc-900 rounded-3xl max-w-3xl w-full max-h-[92vh] overflow-hidden flex flex-col">
-            <div id="modalContent" class="p-8 md:p-10 overflow-auto flex-1"></div>
+    <div id="modal" class="hidden fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4">
+        <div class="modal bg-zinc-900 rounded-3xl max-w-3xl w-full max-h-[95vh] overflow-hidden flex flex-col">
+            <div id="modalContent" class="p-6 md:p-10 overflow-auto flex-1"></div>
         </div>
     </div>
 
     <footer class="bg-black py-12 border-t border-yellow-400">
-        <div class="max-w-7xl mx-auto px-6 text-center text-zinc-500">
-            <p>Слава Україні! 🥊🇺🇦</p>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center text-zinc-500">
+            <p class="text-lg">Слава Україні! 🥊🇺🇦</p>
         </div>
     </footer>
 
     <script>
-        function init() {
-            console.log('%c✅ Сторінка Боксери з відео для Кличків готова!', 'color:#FFD700; font-size:18px');
-        }
+        // Мобільне меню
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        let isOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isOpen = !isOpen;
+            if (isOpen) {
+                mobileMenu.classList.remove('hidden');
+                menuBtn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
 
         function playRingBell() {
             const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -213,78 +240,83 @@
         function showBoxer(id) {
             const modal = document.getElementById('modal');
             const content = document.getElementById('modalContent');
-            
+           
             let html = '';
-
             if (id === 1) { // Усик
                 html = `
-                    <div class="flex justify-end mb-4">
-                        <button onclick="hideModal()" class="text-4xl text-zinc-400 hover:text-white transition">&times;</button>
+                    <div class="flex justify-end mb-6">
+                        <button onclick="hideModal()" class="text-4xl text-zinc-400 hover:text-white">&times;</button>
                     </div>
-                    <h2 class="text-5xl font-bold mb-6">Олександр Усик</h2>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Олександр Усик</h2>
                     <div class="aspect-video bg-black rounded-2xl mb-8 overflow-hidden">
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/5zY0z0z0z0z" 
-                                title="Усик vs Ф'юрі" frameborder="0" allowfullscreen></iframe>
+                        <iframe width="100%" height="100%" 
+                                src="https://www.youtube.com/embed/SJ1d7zl6tdQ" 
+                                title="Усик найкращі моменти" 
+                                frameborder="0" allowfullscreen></iframe>
                     </div>
-                    <div class="grid grid-cols-2 gap-6 text-sm mb-8">
+                    <div class="grid grid-cols-2 gap-4 text-sm md:text-base mb-8">
                         <div><strong>Вага:</strong> Тяжка</div>
-                        <div><strong>Титули:</strong> WBC, WBA, WBO, IBF</div>
+                        <div><strong>Титули:</strong> Абсолютний чемпіон</div>
                         <div><strong>Рекорд:</strong> Непереможений</div>
                         <div><strong>Досягнення:</strong> Переміг Тайсона Ф'юрі</div>
                     </div>
                     <p class="text-lg leading-relaxed">
-                        Один з найкращих боксерів сучасності. Перший український абсолютний чемпіон світу в суперважкій вазі.
-                    </p>
-                `;
-            } 
-            else if (id === 2) { // Ломаченко
-                html = `
-                    <div class="flex justify-end mb-4">
-                        <button onclick="hideModal()" class="text-4xl text-zinc-400 hover:text-white transition">&times;</button>
-                    </div>
-                    <h2 class="text-5xl font-bold mb-6">Василь Ломаченко</h2>
-                    <div class="aspect-video bg-black rounded-2xl mb-8 overflow-hidden">
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/4zY0z0z0z0z" 
-                                title="Ломаченко найкращі моменти" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                    <p class="text-lg leading-relaxed">
-                        Дворазовий олімпійський чемпіон. Відомий своєю унікальною технікою та швидкістю. Чемпіон світу в трьох вагових категоріях.
-                    </p>
-                `;
-            } 
-            else if (id === 3) { // Віталій Кличко
-                html = `
-                    <div class="flex justify-end mb-4">
-                        <button onclick="hideModal()" class="text-4xl text-zinc-400 hover:text-white transition">&times;</button>
-                    </div>
-                    <h2 class="text-5xl font-bold mb-6">Віталій Кличко</h2>
-                    <div class="aspect-video bg-black rounded-2xl mb-8 overflow-hidden">
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/9zY0z0z0z0z" 
-                                title="Віталій Кличко найкращі бої" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                    <p class="text-lg leading-relaxed">
-                        Легендарний чемпіон WBC у суперважкій вазі. Тримав титул майже 10 років. 
-                        Один з найжорсткіших важковаговиків в історії боксу.
-                    </p>
-                `;
-            } 
-            else if (id === 4) { // Володимир Кличко
-                html = `
-                    <div class="flex justify-end mb-4">
-                        <button onclick="hideModal()" class="text-4xl text-zinc-400 hover:text-white transition">&times;</button>
-                    </div>
-                    <h2 class="text-5xl font-bold mb-6">Володимир Кличко</h2>
-                    <div class="aspect-video bg-black rounded-2xl mb-8 overflow-hidden">
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/8zY0z0z0z0z" 
-                                title="Володимир Кличко найкращі моменти" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                    <p class="text-lg leading-relaxed">
-                        Один з найдомінуючіших важковаговиків в історії. Чемпіон світу протягом 12 років. 
-                        Відомий як "Доктор Сталевий Молот".
+                        Один з найкращих боксерів сучасності. Перший український абсолютний чемпіон у суперважкій вазі.
                     </p>
                 `;
             }
-
+            else if (id === 2) { // Ломаченко
+                html = `
+                    <div class="flex justify-end mb-6">
+                        <button onclick="hideModal()" class="text-4xl text-zinc-400 hover:text-white">&times;</button>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Василь Ломаченко</h2>
+                    <div class="aspect-video bg-black rounded-2xl mb-8 overflow-hidden">
+                        <iframe width="100%" height="100%" 
+                                src="https://www.youtube.com/embed/u1BN82T44xk" 
+                                title="Ломаченко найкращі моменти" 
+                                frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <p class="text-lg leading-relaxed">
+                        Дворазовий олімпійський чемпіон. Відомий своєю унікальною технікою, швидкістю та футворком. Чемпіон світу в трьох вагових категоріях.
+                    </p>
+                `;
+            }
+            else if (id === 3) { // Віталій Кличко
+                html = `
+                    <div class="flex justify-end mb-6">
+                        <button onclick="hideModal()" class="text-4xl text-zinc-400 hover:text-white">&times;</button>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Віталій Кличко</h2>
+                    <div class="aspect-video bg-black rounded-2xl mb-8 overflow-hidden">
+                        <iframe width="100%" height="100%" 
+                                src="https://www.youtube.com/embed/BrTJ-Ut6INU" 
+                                title="Віталій Кличко нокаути" 
+                                frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <p class="text-lg leading-relaxed">
+                        Легендарний чемпіон WBC. Тримав титул майже 10 років. Один з найжорсткіших важковаговиків в історії боксу.
+                    </p>
+                `;
+            }
+            else if (id === 4) { // Володимир Кличко
+                html = `
+                    <div class="flex justify-end mb-6">
+                        <button onclick="hideModal()" class="text-4xl text-zinc-400 hover:text-white">&times;</button>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Володимир Кличко</h2>
+                    <div class="aspect-video bg-black rounded-2xl mb-8 overflow-hidden">
+                        <iframe width="100%" height="100%" 
+                                src="https://www.youtube.com/embed/28GMRDOodmk" 
+                                title="Володимир Кличко нокаути" 
+                                frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <p class="text-lg leading-relaxed">
+                        Один з найдомінуючіших важковаговиків в історії. Чемпіон світу протягом 12 років. "Доктор Сталевий Молот".
+                    </p>
+                `;
+            }
+            
             content.innerHTML = html;
             modal.classList.remove('hidden');
             modal.classList.add('flex');
@@ -296,7 +328,14 @@
             modal.classList.remove('flex');
         }
 
-        window.onload = init;
+        // Закриття модалки по ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") hideModal();
+        });
+
+        window.onload = () => {
+            console.log('%c✅ Сторінка Боксери оптимізована для телефонів з робочими відео!', 'color:#FFD700; font-size:16px; font-weight:bold');
+        };
     </script>
 </body>
 </html>
