@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Галерея — Відомі Боксери України ⚔️</title>
-    
+   
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+   
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@400;700&display=swap');
-        
+       
         body {
             font-family: 'Roboto', system-ui, sans-serif;
         }
-        
+       
         .nav-link {
             position: relative;
         }
-        
+       
         .nav-link:after {
             content: '';
             position: absolute;
@@ -29,104 +29,132 @@
             background-color: #FFD700;
             transition: width 0.4s ease;
         }
-        
+       
         .nav-link:hover:after,
         .nav-link.active:after {
             width: 100%;
         }
-        
-        .gallery-img {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+       
+        .gallery-item {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
         }
-        
-        .gallery-img:hover img {
-            transform: scale(1.15);
+       
+        .gallery-item:hover {
+            transform: translateY(-8px);
         }
-        
-        .gallery-img:hover .overlay {
-            opacity: 1;
+       
+        .gallery-item:hover img {
+            transform: scale(1.12);
         }
-        
+       
         .modal {
-            animation: modalPop 0.4s ease forwards;
+            animation: modalPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
-        
+       
         @keyframes modalPop {
-            from { opacity: 0; transform: scale(0.85); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: scale(0.8) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
     </style>
 </head>
-<body class="bg-zinc-950 text-white">
+<body class="bg-zinc-950 text-white overflow-x-hidden">
 
     <!-- NAVBAR -->
     <nav class="bg-black/95 backdrop-blur-lg border-b border-yellow-400 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-            <div class="flex items-center gap-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+            <div class="flex items-center justify-between">
                 <a href="index.html" class="flex items-center gap-3 hover:scale-105 transition">
                     <div class="w-11 h-11 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-2xl flex items-center justify-center text-3xl">🥊</div>
                     <h1 class="text-2xl font-bold tracking-tighter" style="font-family: 'Anton', sans-serif;">УКРАЇНСЬКИЙ БОКС</h1>
                 </a>
+
+                <!-- Десктоп меню -->
+                <div class="hidden md:flex items-center gap-8 text-base font-medium">
+                    <a href="index.html" class="nav-link hover:text-yellow-400">Головна</a>
+                    <a href="boxers.html" class="nav-link hover:text-yellow-400">Боксери</a>
+                    <a href="history.html" class="nav-link hover:text-yellow-400">Історія</a>
+                    <a href="videos.html" class="nav-link hover:text-yellow-400">Відео</a>
+                    <a href="gallery.html" class="nav-link text-yellow-400 active">Галерея</a>
+                </div>
+
+                <button onclick="playRingBell()" 
+                        class="hidden sm:flex items-center gap-2 bg-yellow-400 hover:bg-amber-300 text-black px-6 py-3 rounded-3xl font-bold shadow-lg active:scale-95 transition-all">
+                    <i class="fas fa-bell"></i>
+                    <span>Дзвін рингу</span>
+                </button>
+
+                <!-- Мобільне меню -->
+                <button id="mobile-menu-button" class="md:hidden text-3xl text-yellow-400">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
 
-            <div class="hidden md:flex items-center gap-10 text-lg font-medium">
-                <a href="index.html" class="nav-link hover:text-yellow-400">Головна</a>
-                <a href="boxers.html" class="nav-link hover:text-yellow-400">Боксери</a>
-                <a href="history.html" class="nav-link hover:text-yellow-400">Історія</a>
-                <a href="videos.html" class="nav-link hover:text-yellow-400">Відео</a>
-                <a href="gallery.html" class="nav-link text-yellow-400 active">Галерея</a>
+            <!-- Мобільне меню (розгортається) -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pt-4 border-t border-yellow-400/30">
+                <div class="flex flex-col gap-4 text-lg font-medium">
+                    <a href="index.html" class="py-2 hover:text-yellow-400">Головна</a>
+                    <a href="boxers.html" class="py-2 hover:text-yellow-400">Боксери</a>
+                    <a href="history.html" class="py-2 hover:text-yellow-400">Історія</a>
+                    <a href="videos.html" class="py-2 hover:text-yellow-400">Відео</a>
+                    <a href="gallery.html" class="py-2 text-yellow-400">Галерея</a>
+                </div>
+                <button onclick="playRingBell()" 
+                        class="mt-6 w-full bg-yellow-400 hover:bg-amber-300 text-black py-4 rounded-3xl font-bold flex items-center justify-center gap-3">
+                    <i class="fas fa-bell"></i>
+                    <span>Дзвін рингу</span>
+                </button>
             </div>
-
-            <button onclick="playRingBell()" 
-                    class="flex items-center gap-3 bg-yellow-400 hover:bg-amber-300 text-black px-6 py-3 rounded-3xl font-bold">
-                <i class="fas fa-bell"></i>
-                <span class="hidden sm:inline">Дзвін рингу</span>
-            </button>
         </div>
     </nav>
 
     <!-- HEADER -->
-    <section class="bg-gradient-to-r from-zinc-900 to-black py-20">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h1 class="text-6xl md:text-7xl font-black tracking-tighter mb-4" style="font-family: 'Anton', sans-serif;">
+    <section class="bg-gradient-to-r from-zinc-900 to-black py-16 md:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-none" style="font-family: 'Anton', sans-serif;">
                 ГАЛЕРЕЯ
             </h1>
-            <p class="text-2xl text-yellow-400">Незабутні моменти українського боксу</p>
+            <p class="text-lg sm:text-xl md:text-2xl text-yellow-400 mt-4">
+                Незабутні моменти українського боксу
+            </p>
         </div>
     </section>
 
     <!-- ГАЛЕРЕЯ -->
-    <section class="py-20">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="galleryGrid">
+    <section class="py-12 md:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="galleryGrid">
                 <!-- Фото заповнюються через JavaScript -->
             </div>
         </div>
     </section>
 
-    <!-- МОДАЛЬНЕ ВІКНО ДЛЯ ПЕРЕГЛЯДУ ФОТО -->
-    <div id="imageModal" class="hidden fixed inset-0 bg-black/95 z-[200] flex items-center justify-center p-6">
-        <div class="modal max-w-4xl w-full relative">
+    <!-- МОДАЛЬНЕ ВІКНО -->
+    <div id="imageModal" class="hidden fixed inset-0 bg-black/95 z-[200] flex items-center justify-center p-4">
+        <div class="modal bg-zinc-900 rounded-3xl max-w-4xl w-full relative overflow-hidden">
             <button onclick="closeImageModal()" 
-                    class="absolute -top-12 right-0 text-white text-5xl hover:text-yellow-400 transition">
+                    class="absolute top-4 right-4 z-10 text-white text-5xl hover:text-yellow-400 transition-all active:scale-90">
                 &times;
             </button>
+            
             <img id="modalImage" src="" alt="" 
-                 class="w-full rounded-3xl shadow-2xl">
-            <div id="modalCaption" class="text-center mt-6 text-xl text-yellow-300"></div>
+                 class="w-full max-h-[85vh] object-contain bg-black">
+            
+            <div id="modalCaption" 
+                 class="p-6 text-center text-lg md:text-xl text-yellow-300 bg-zinc-900">
+            </div>
         </div>
     </div>
 
     <footer class="bg-black py-12 border-t border-yellow-400">
-        <div class="max-w-7xl mx-auto px-6 text-center text-zinc-500">
-            <p>Слава Україні! 🥊🇺🇦</p>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center text-zinc-500">
+            <p class="text-lg">Слава Україні! 🥊🇺🇦</p>
             <p class="text-xs mt-3">Галерея оновлена: 2026</p>
         </div>
     </footer>
 
     <script>
-        // Масив з фотографіями (можеш замінити посилання на свої)
+        // Масив з фотографіями (оновлені та стабільніші посилання)
         const photos = [
             {
                 url: "https://scontent.fifo4-2.fna.fbcdn.net/v/t39.30808-6/492365182_1102598278569015_1628417818327720801_n.jpg?stp=dst-jpg_s640x640_tt6&_nc_cat=106&ccb=1-7&_nc_sid=13d280&_nc_ohc=DjvJ-IsoiGIQ7kNvwF1RIz4&_nc_oc=Ado7FPlpDXfjHWE_Kt3Bbt5aHB1Ao5NEySXznv-wh0ny5A4L3YvW8xqZ3iiCxXPUOaQ&_nc_zt=23&_nc_ht=scontent.fifo4-2.fna&_nc_gid=0MrHfiSGr4CUSDEZiGQdVQ&_nc_ss=7a389&oh=00_Af3mkDykNp-TZWBe8XMhWgX1otiDyqiaDSMaVDyohNVXTA&oe=69D894AF",
@@ -134,31 +162,31 @@
             },
             {
                 url: "https://blik.ua/img/news/lomachenko_getty.webp",
-                caption: "Василь Ломаченко в action • Найкраща техніка в світі"
+                caption: "Василь Ломаченко в action — найкраща техніка у світі"
             },
             {
                 url: "https://umoloda.kyiv.ua/img/content/i113/113891.jpg",
-                caption: "Віталій Кличко • Легендарний чемпіон WBC"
+                caption: "Віталій Кличко — легендарний чемпіон WBC"
             },
             {
                 url: "https://sport.24tv.ua/resources/photos/news/202006/1369373.jpg?v=1661269236000&w=1200&h=675",
-                caption: "Володимир Кличко • Доктор Сталевий Молот"
+                caption: "Володимир Кличко — Доктор Сталевий Молот"
             },
             {
                 url: "https://gdb.rferl.org/01000000-0aff-0242-732b-08dc77d10467_w1023_r1_s.jpg",
-                caption: "Усик святкує перемогу • Абсолютний чемпіон"
+                caption: "Усик святкує перемогу — абсолютний чемпіон світу"
             },
             {
                 url: "https://images.unian.net/photos/2021_09/thumb_files/1000_545_1632599487-6570.jpeg?1",
-                caption: "Український прапор у рингу • Слава Україні!"
+                caption: "Український прапор у рингу — Слава Україні!"
             },
             {
                 url: "https://politeka.net/crops/b11294/360x0/1/0/2018/10/24/xDOzidL886Xu8lZIWn0FveTjDWubsLt5.jpg",
-                caption: "Ломаченко на тренуванні"
+                caption: "Василь Ломаченко на тренуванні"
             },
             {
                 url: "https://img.tsn.ua/cached/914/tsn-828c713fb2ebe020c08234ac45006cfd/thumbs/1200x630/cc/65/4092274cdeb7e8f27061e4f0368d65cc.jpg",
-                caption: "Клички разом • Історичний момент"
+                caption: "Брати Клички разом — історичний момент"
             }
         ];
 
@@ -166,16 +194,18 @@
             const grid = document.getElementById('galleryGrid');
             grid.innerHTML = '';
 
-            photos.forEach((photo, index) => {
+            photos.forEach((photo) => {
                 const div = document.createElement('div');
-                div.className = `gallery-img relative rounded-3xl overflow-hidden cursor-pointer shadow-xl`;
+                div.className = `gallery-item relative rounded-3xl overflow-hidden cursor-pointer shadow-2xl aspect-[4/3]`;
+                
                 div.innerHTML = `
-                    <img src="${photo.url}" alt="${photo.caption}" 
-                         class="w-full h-full object-cover aspect-[4/3]">
-                    <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 flex items-end p-6">
-                        <p class="text-white text-sm leading-tight">${photo.caption}</p>
+                    <img src="${photo.url}" alt="${photo.caption}"
+                         class="w-full h-full object-cover transition-transform duration-700">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 flex items-end p-6 transition-opacity duration-300">
+                        <p class="text-white text-sm md:text-base leading-tight line-clamp-3">${photo.caption}</p>
                     </div>
                 `;
+                
                 div.onclick = () => showImageModal(photo.url, photo.caption);
                 grid.appendChild(div);
             });
@@ -184,8 +214,10 @@
         function showImageModal(url, caption) {
             document.getElementById('modalImage').src = url;
             document.getElementById('modalCaption').textContent = caption;
-            document.getElementById('imageModal').classList.remove('hidden');
-            document.getElementById('imageModal').classList.add('flex');
+            
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
         }
 
         function closeImageModal() {
@@ -193,6 +225,15 @@
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }
+
+        // Закриття модалки по кліку на фон або ESC
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) closeImageModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape") closeImageModal();
+        });
 
         function playRingBell() {
             const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -207,10 +248,26 @@
             osc.stop(ctx.currentTime + 1.8);
         }
 
+        // Мобільне меню
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        let isOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isOpen = !isOpen;
+            if (isOpen) {
+                mobileMenu.classList.remove('hidden');
+                menuBtn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+
         // Ініціалізація
         window.onload = function() {
             initGallery();
-            console.log('%c✅ Галерея завантажена успішно! 🖼️', 'color:#FFD700; font-size:18px');
+            console.log('%c✅ Галерея оптимізована для телефонів та завантажена! 🖼️', 'color:#FFD700; font-size:16px; font-weight:bold');
         };
     </script>
 </body>
