@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Історія — Відомі Боксери України ⚔️</title>
-    
+   
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+   
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@400;700&display=swap');
-        
+       
         body {
             font-family: 'Roboto', system-ui, sans-serif;
         }
-        
+       
         .nav-link {
             position: relative;
         }
-        
+       
         .nav-link:after {
             content: '';
             position: absolute;
@@ -29,178 +29,219 @@
             background-color: #FFD700;
             transition: width 0.4s ease;
         }
-        
+       
         .nav-link:hover:after,
         .nav-link.active:after {
             width: 100%;
         }
-        
+       
         .timeline-item {
             transition: all 0.5s ease;
         }
-        
+       
         .timeline-item:hover {
-            transform: translateX(15px);
+            transform: translateX(10px);
         }
-        
+       
         .era-card {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+       
         .era-card:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
             box-shadow: 0 20px 40px -10px rgb(255 215 0 / 0.3);
         }
     </style>
 </head>
-<body class="bg-zinc-950 text-white">
+<body class="bg-zinc-950 text-white overflow-x-hidden">
 
     <!-- NAVBAR -->
     <nav class="bg-black/95 backdrop-blur-lg border-b border-yellow-400 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-            <div class="flex items-center gap-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+            <div class="flex items-center justify-between">
                 <a href="index.html" class="flex items-center gap-3 hover:scale-105 transition">
                     <div class="w-11 h-11 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-2xl flex items-center justify-center text-3xl">🥊</div>
                     <h1 class="text-2xl font-bold tracking-tighter" style="font-family: 'Anton', sans-serif;">УКРАЇНСЬКИЙ БОКС</h1>
                 </a>
+
+                <!-- Десктоп меню -->
+                <div class="hidden md:flex items-center gap-8 text-base font-medium">
+                    <a href="index.html" class="nav-link hover:text-yellow-400">Головна</a>
+                    <a href="boxers.html" class="nav-link hover:text-yellow-400">Боксери</a>
+                    <a href="history.html" class="nav-link text-yellow-400 active">Історія</a>
+                    <a href="videos.html" class="nav-link hover:text-yellow-400">Відео</a>
+                    <a href="gallery.html" class="nav-link hover:text-yellow-400">Галерея</a>
+                </div>
+
+                <button onclick="playRingBell()" 
+                        class="hidden sm:flex items-center gap-2 bg-yellow-400 hover:bg-amber-300 text-black px-6 py-3 rounded-3xl font-bold shadow-lg active:scale-95 transition-all">
+                    <i class="fas fa-bell"></i>
+                    <span>Дзвін рингу</span>
+                </button>
+
+                <!-- Мобільна кнопка меню -->
+                <button id="mobile-menu-button" class="md:hidden text-3xl text-yellow-400">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
 
-            <div class="hidden md:flex items-center gap-10 text-lg font-medium">
-                <a href="index.html" class="nav-link hover:text-yellow-400">Головна</a>
-                <a href="boxers.html" class="nav-link hover:text-yellow-400">Боксери</a>
-                <a href="history.html" class="nav-link text-yellow-400 active">Історія</a>
-                <a href="videos.html" class="nav-link hover:text-yellow-400">Відео</a>
-                <a href="gallery.html" class="nav-link hover:text-yellow-400">Галерея</a>
+            <!-- Мобільне меню -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pt-4 border-t border-yellow-400/30">
+                <div class="flex flex-col gap-4 text-lg font-medium">
+                    <a href="index.html" class="py-2 hover:text-yellow-400">Головна</a>
+                    <a href="boxers.html" class="py-2 hover:text-yellow-400">Боксери</a>
+                    <a href="history.html" class="py-2 text-yellow-400">Історія</a>
+                    <a href="videos.html" class="py-2 hover:text-yellow-400">Відео</a>
+                    <a href="gallery.html" class="py-2 hover:text-yellow-400">Галерея</a>
+                </div>
+                <button onclick="playRingBell()" 
+                        class="mt-6 w-full bg-yellow-400 hover:bg-amber-300 text-black py-4 rounded-3xl font-bold flex items-center justify-center gap-3">
+                    <i class="fas fa-bell"></i>
+                    <span>Дзвін рингу</span>
+                </button>
             </div>
-
-            <button onclick="playRingBell()" 
-                    class="flex items-center gap-3 bg-yellow-400 hover:bg-amber-300 text-black px-6 py-3 rounded-3xl font-bold">
-                <i class="fas fa-bell"></i>
-                <span class="hidden sm:inline">Дзвін рингу</span>
-            </button>
         </div>
     </nav>
 
     <!-- HEADER -->
-    <section class="bg-gradient-to-r from-zinc-900 to-black py-20">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h1 class="text-6xl md:text-7xl font-black tracking-tighter mb-4" style="font-family: 'Anton', sans-serif;">
+    <section class="bg-gradient-to-r from-zinc-900 to-black py-16 md:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-none" style="font-family: 'Anton', sans-serif;">
                 ІСТОРІЯ УКРАЇНСЬКОГО БОКСУ
             </h1>
-            <p class="text-2xl text-yellow-400">Від незалежності до світового лідерства у 2026 році</p>
+            <p class="text-lg sm:text-xl md:text-2xl text-yellow-400 mt-4">
+                Від незалежності до світового лідерства у 2026 році
+            </p>
         </div>
     </section>
 
     <!-- TIMELINE -->
-    <section class="py-20">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="space-y-16">
+    <section class="py-12 md:py-20">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="space-y-12 md:space-y-16">
 
                 <!-- 1991-2000 -->
-                <div class="timeline-item flex flex-col md:flex-row gap-10">
-                    <div class="md:w-48 flex-shrink-0">
-                        <div class="text-6xl font-black text-yellow-400" style="font-family: 'Anton', sans-serif;">1991-2000</div>
+                <div class="timeline-item flex flex-col md:flex-row gap-8 md:gap-10">
+                    <div class="md:w-52 flex-shrink-0">
+                        <div class="text-5xl md:text-6xl font-black text-yellow-400" style="font-family: 'Anton', sans-serif;">1991-2000</div>
                     </div>
-                    <div class="flex-1 bg-zinc-900 rounded-3xl p-10 era-card">
-                        <h3 class="text-3xl font-bold mb-4">Незалежність і перші кроки</h3>
-                        <p class="text-zinc-300 leading-relaxed">
+                    <div class="flex-1 bg-zinc-900 rounded-3xl p-7 md:p-10 era-card">
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4">Незалежність і перші кроки</h3>
+                        <p class="text-zinc-300 leading-relaxed text-base md:text-lg">
                             Після проголошення незалежності України з'являються перші професійні боксери. 
-                            Брати Клички починають свою легендарну кар'єру.
+                            Брати Клички починають свою легендарну кар'єру у професійному боксі.
                         </p>
                     </div>
                 </div>
 
                 <!-- 2000-2010 -->
-                <div class="timeline-item flex flex-col md:flex-row gap-10">
-                    <div class="md:w-48 flex-shrink-0">
-                        <div class="text-6xl font-black text-yellow-400" style="font-family: 'Anton', sans-serif;">2000-2010</div>
+                <div class="timeline-item flex flex-col md:flex-row gap-8 md:gap-10">
+                    <div class="md:w-52 flex-shrink-0">
+                        <div class="text-5xl md:text-6xl font-black text-yellow-400" style="font-family: 'Anton', sans-serif;">2000-2010</div>
                     </div>
-                    <div class="flex-1 bg-zinc-900 rounded-3xl p-10 era-card">
-                        <h3 class="text-3xl font-bold mb-4">Ера братів Кличків</h3>
-                        <p class="text-zinc-300 leading-relaxed">
+                    <div class="flex-1 bg-zinc-900 rounded-3xl p-7 md:p-10 era-card">
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4">Ера братів Кличків</h3>
+                        <p class="text-zinc-300 leading-relaxed text-base md:text-lg">
                             Віталій та Володимир Клички повністю домінують у суперважкій вазі. 
-                            Вони стають символом українського боксу у світі.
+                            Вони стають символом українського боксу у світі та уособленням сили України.
                         </p>
                     </div>
                 </div>
 
                 <!-- 2010-2020 -->
-                <div class="timeline-item flex flex-col md:flex-row gap-10">
-                    <div class="md:w-48 flex-shrink-0">
-                        <div class="text-6xl font-black text-yellow-400" style="font-family: 'Anton', sans-serif;">2010-2020</div>
+                <div class="timeline-item flex flex-col md:flex-row gap-8 md:gap-10">
+                    <div class="md:w-52 flex-shrink-0">
+                        <div class="text-5xl md:text-6xl font-black text-yellow-400" style="font-family: 'Anton', sans-serif;">2010-2020</div>
                     </div>
-                    <div class="flex-1 bg-zinc-900 rounded-3xl p-10 era-card">
-                        <h3 class="text-3xl font-bold mb-4">Олімпійські зірки</h3>
-                        <p class="text-zinc-300 leading-relaxed">
+                    <div class="flex-1 bg-zinc-900 rounded-3xl p-7 md:p-10 era-card">
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4">Олімпійські зірки</h3>
+                        <p class="text-zinc-300 leading-relaxed text-base md:text-lg">
                             Василь Ломаченко та Олександр Усик стають дворазовими олімпійськими чемпіонами. 
-                            Ломаченко вражає технікою, Усик підкорює крузер і переходить у heavyweight.
+                            Ломаченко вражає світ своєю технікою, а Усик підкорює крузервейт і переходить у heavyweight.
                         </p>
                     </div>
                 </div>
 
-                <!-- 2020-2026 (оновлено) -->
-                <div class="timeline-item flex flex-col md:flex-row gap-10">
-                    <div class="md:w-48 flex-shrink-0">
-                        <div class="text-6xl font-black text-yellow-400" style="font-family: 'Anton', sans-serif;">2020 — 2026</div>
+                <!-- 2020-2026 -->
+                <div class="timeline-item flex flex-col md:flex-row gap-8 md:gap-10">
+                    <div class="md:w-52 flex-shrink-0">
+                        <div class="text-5xl md:text-6xl font-black text-yellow-400" style="font-family: 'Anton', sans-serif;">2020 — 2026</div>
                     </div>
-                    <div class="flex-1 bg-zinc-900 rounded-3xl p-10 era-card">
-                        <h3 class="text-3xl font-bold mb-4">Сучасна епоха домінування</h3>
-                        <p class="text-zinc-300 leading-relaxed">
-                            Олександр Усик у 2024 році стає абсолютним чемпіоном світу в суперважкій вазі, перемігши Тайсона Ф'юрі (двічі). 
-                            У 2025 році перемагає Даніеля Дюбуа. Станом на 2026 рік Усик залишається одним з найкращих важковаговиків планети і планує завершити кар'єру яскраво.
+                    <div class="flex-1 bg-zinc-900 rounded-3xl p-7 md:p-10 era-card">
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4">Сучасна епоха домінування</h3>
+                        <p class="text-zinc-300 leading-relaxed text-base md:text-lg">
+                            Олександр Усик у 2024 році стає абсолютним чемпіоном світу в суперважкій вазі, перемігши Тайсона Ф'юрі двічі. 
+                            У 2025 році він захищає титули проти Даніеля Дюбуа.
                         </p>
-                        <p class="mt-6 text-zinc-300 leading-relaxed">
-                            Василь Ломаченко завершив професійну кар'єру у 2025 році, залишивши після себе спадщину технічного майстерності.
+                        <p class="mt-6 text-zinc-300 leading-relaxed text-base md:text-lg">
+                            Василь Ломаченко завершив професійну кар'єру у 2025 році, залишивши величезну спадщину технічного боксу.
                         </p>
-                        <div class="mt-8 inline-flex items-center gap-3 bg-yellow-400/10 border border-yellow-400 text-yellow-400 px-6 py-3 rounded-2xl">
-                            <span class="text-2xl">🇺🇦</span>
-                            <span class="font-bold">Україна — топ-нація світового боксу у 2026 році</span>
+                        <div class="mt-8 inline-flex items-center gap-3 bg-yellow-400/10 border border-yellow-400 text-yellow-400 px-6 py-4 rounded-2xl">
+                            <span class="text-3xl">🇺🇦</span>
+                            <span class="font-bold text-lg">Україна — топ-нація світового боксу у 2026 році</span>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
     <!-- ЦІКАВІ ФАКТИ -->
-    <section class="py-20 bg-black">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-5xl font-black text-center mb-16" style="font-family: 'Anton', sans-serif;">
+    <section class="py-16 md:py-20 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <h2 class="text-4xl sm:text-5xl font-black text-center mb-12 md:mb-16 tracking-tight" style="font-family: 'Anton', sans-serif;">
                 УКРАЇНА В БОКСІ СЬОГОДНІ
             </h2>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-zinc-900 p-8 rounded-3xl">
-                    <div class="text-5xl mb-6">🥇</div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <div class="bg-zinc-900 p-8 rounded-3xl era-card">
+                    <div class="text-6xl mb-6">🥇</div>
                     <h4 class="text-2xl font-bold mb-3">Абсолютний чемпіон</h4>
-                    <p class="text-zinc-400">Олександр Усик — перший українець, який став абсолютним чемпіоном у суперважкій вазі.</p>
+                    <p class="text-zinc-400 leading-relaxed">
+                        Олександр Усик — перший українець, який став абсолютним чемпіоном у суперважкій вазі.
+                    </p>
                 </div>
-                <div class="bg-zinc-900 p-8 rounded-3xl">
-                    <div class="text-5xl mb-6">🌍</div>
+                <div class="bg-zinc-900 p-8 rounded-3xl era-card">
+                    <div class="text-6xl mb-6">🌍</div>
                     <h4 class="text-2xl font-bold mb-3">Світове визнання</h4>
-                    <p class="text-zinc-400">Усик неодноразово визнавався боксером року за версією WBC та The Ring.</p>
+                    <p class="text-zinc-400 leading-relaxed">
+                        Усик неодноразово визнавався боксером року за версією WBC, The Ring та інших престижних видань.
+                    </p>
                 </div>
-                <div class="bg-zinc-900 p-8 rounded-3xl">
-                    <div class="text-5xl mb-6">👊</div>
+                <div class="bg-zinc-900 p-8 rounded-3xl era-card">
+                    <div class="text-6xl mb-6">👊</div>
                     <h4 class="text-2xl font-bold mb-3">Легенди</h4>
-                    <p class="text-zinc-400">Брати Клички, Ломаченко та Усик — обличчя українського боксу XXI століття.</p>
+                    <p class="text-zinc-400 leading-relaxed">
+                        Брати Клички, Ломаченко та Усик — обличчя українського боксу XXI століття.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
     <footer class="bg-black py-12 border-t border-yellow-400">
-        <div class="max-w-7xl mx-auto px-6 text-center text-zinc-500">
-            <p>Слава Україні! 🥊🇺🇦</p>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center text-zinc-500">
+            <p class="text-lg">Слава Україні! 🥊🇺🇦</p>
             <p class="text-xs mt-4">Оновлено: квітень 2026</p>
         </div>
     </footer>
 
     <script>
-        function init() {
-            console.log('%c✅ Сторінка Історія оновлена під 2026 рік!', 'color:#FFD700; font-size:18px');
-        }
+        // Мобільне меню
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        let isOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isOpen = !isOpen;
+            if (isOpen) {
+                mobileMenu.classList.remove('hidden');
+                menuBtn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
 
         function playRingBell() {
             const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -215,7 +256,9 @@
             osc.stop(ctx.currentTime + 1.8);
         }
 
-        window.onload = init;
+        window.onload = () => {
+            console.log('%c✅ Сторінка Історія оптимізована для телефонів!', 'color:#FFD700; font-size:16px; font-weight:bold');
+        };
     </script>
 </body>
 </html>
