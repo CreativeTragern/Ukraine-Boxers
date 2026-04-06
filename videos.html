@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Відео — Відомі Боксери України ⚔️</title>
-    
+   
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+   
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@400;700&display=swap');
-        
+       
         body {
             font-family: 'Roboto', system-ui, sans-serif;
         }
-        
+       
         .nav-link {
             position: relative;
         }
-        
+       
         .nav-link:after {
             content: '';
             position: absolute;
@@ -29,162 +29,192 @@
             background-color: #FFD700;
             transition: width 0.4s ease;
         }
-        
+       
         .nav-link:hover:after,
         .nav-link.active:after {
             width: 100%;
         }
-        
+       
         .video-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+       
         .video-card:hover {
             transform: translateY(-12px);
             box-shadow: 0 25px 50px -12px rgb(255 215 0 / 0.4);
         }
-        
+       
         .video-container {
             position: relative;
-            padding-top: 56.25%; /* 16:9 aspect ratio */
+            padding-top: 56.25%; /* 16:9 */
         }
-        
+       
         .video-container iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            border: 0;
         }
     </style>
 </head>
-<body class="bg-zinc-950 text-white">
+<body class="bg-zinc-950 text-white overflow-x-hidden">
 
     <!-- NAVBAR -->
     <nav class="bg-black/95 backdrop-blur-lg border-b border-yellow-400 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-            <div class="flex items-center gap-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+            <div class="flex items-center justify-between">
                 <a href="index.html" class="flex items-center gap-3 hover:scale-105 transition">
                     <div class="w-11 h-11 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-2xl flex items-center justify-center text-3xl">🥊</div>
                     <h1 class="text-2xl font-bold tracking-tighter" style="font-family: 'Anton', sans-serif;">УКРАЇНСЬКИЙ БОКС</h1>
                 </a>
+
+                <!-- Десктоп меню -->
+                <div class="hidden md:flex items-center gap-8 text-base font-medium">
+                    <a href="index.html" class="nav-link hover:text-yellow-400">Головна</a>
+                    <a href="boxers.html" class="nav-link hover:text-yellow-400">Боксери</a>
+                    <a href="history.html" class="nav-link hover:text-yellow-400">Історія</a>
+                    <a href="videos.html" class="nav-link text-yellow-400 active">Відео</a>
+                    <a href="gallery.html" class="nav-link hover:text-yellow-400">Галерея</a>
+                </div>
+
+                <button onclick="playRingBell()" 
+                        class="hidden sm:flex items-center gap-2 bg-yellow-400 hover:bg-amber-300 text-black px-6 py-3 rounded-3xl font-bold shadow-lg active:scale-95 transition-all">
+                    <i class="fas fa-bell"></i>
+                    <span>Дзвін рингу</span>
+                </button>
+
+                <!-- Мобільне меню кнопка -->
+                <button id="mobile-menu-button" class="md:hidden text-3xl text-yellow-400">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
 
-            <div class="hidden md:flex items-center gap-10 text-lg font-medium">
-                <a href="index.html" class="nav-link hover:text-yellow-400">Головна</a>
-                <a href="boxers.html" class="nav-link hover:text-yellow-400">Боксери</a>
-                <a href="history.html" class="nav-link hover:text-yellow-400">Історія</a>
-                <a href="videos.html" class="nav-link text-yellow-400 active">Відео</a>
-                <a href="gallery.html" class="nav-link hover:text-yellow-400">Галерея</a>
+            <!-- Мобільне меню -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pt-4 border-t border-yellow-400/30">
+                <div class="flex flex-col gap-4 text-lg font-medium">
+                    <a href="index.html" class="py-2 hover:text-yellow-400">Головна</a>
+                    <a href="boxers.html" class="py-2 hover:text-yellow-400">Боксери</a>
+                    <a href="history.html" class="py-2 hover:text-yellow-400">Історія</a>
+                    <a href="videos.html" class="py-2 text-yellow-400">Відео</a>
+                    <a href="gallery.html" class="py-2 hover:text-yellow-400">Галерея</a>
+                </div>
+                <button onclick="playRingBell()" 
+                        class="mt-6 w-full bg-yellow-400 hover:bg-amber-300 text-black py-4 rounded-3xl font-bold flex items-center justify-center gap-3">
+                    <i class="fas fa-bell"></i>
+                    <span>Дзвін рингу</span>
+                </button>
             </div>
-
-            <button onclick="playRingBell()" 
-                    class="flex items-center gap-3 bg-yellow-400 hover:bg-amber-300 text-black px-6 py-3 rounded-3xl font-bold">
-                <i class="fas fa-bell"></i>
-                <span class="hidden sm:inline">Дзвін рингу</span>
-            </button>
         </div>
     </nav>
 
     <!-- HEADER -->
-    <section class="bg-gradient-to-r from-zinc-900 to-black py-20">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h1 class="text-6xl md:text-7xl font-black tracking-tighter mb-4" style="font-family: 'Anton', sans-serif;">
+    <section class="bg-gradient-to-r from-zinc-900 to-black py-16 md:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-none" style="font-family: 'Anton', sans-serif;">
                 НАЙКРАЩІ ВІДЕО
             </h1>
-            <p class="text-2xl text-yellow-400">Бої, моменти та легендарні поєдинки</p>
+            <p class="text-lg sm:text-xl md:text-2xl text-yellow-400 mt-4">
+                Бої, нокаути та легендарні моменти українських чемпіонів
+            </p>
         </div>
     </section>
 
     <!-- ВІДЕО СЕКЦІЯ -->
-    <section class="py-20">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-10">
+    <section class="py-12 md:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
 
-                <!-- Відео 1: Усик vs Ф'юрі -->
+                <!-- Усик vs Ф'юрі -->
                 <div class="video-card bg-zinc-900 rounded-3xl overflow-hidden">
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/watch?v=Guba57_Bml0" 
-                                title="Усик vs Ф'юрі" 
-                                frameborder="0" 
+                        <iframe src="https://www.youtube.com/embed/PzkltpFwAlw" 
+                                title="Усик vs Ф'юрі 2 Highlights" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                 allowfullscreen></iframe>
                     </div>
-                    <div class="p-8">
-                        <h3 class="text-3xl font-bold mb-2">Олександр Усик vs Тайсон Ф'юрі</h3>
-                        <p class="text-yellow-400 text-xl mb-4">Історичний бій за абсолютного чемпіона (2024)</p>
-                        <p class="text-zinc-400">Усик перемагає Ф'юрі та стає першим абсолютним чемпіоном світу в суперважкій вазі з України.</p>
+                    <div class="p-6 md:p-8">
+                        <h3 class="text-2xl md:text-3xl font-bold mb-2">Олександр Усик vs Тайсон Ф'юрі</h3>
+                        <p class="text-yellow-400 text-lg mb-3">Історичний бій за абсолют (2024)</p>
+                        <p class="text-zinc-400 text-base">Усик перемагає Ф'юрі та стає першим українським абсолютним чемпіоном у суперважкій вазі.</p>
                     </div>
                 </div>
 
-                <!-- Відео 2: Ломаченко найкращі моменти -->
+                <!-- Ломаченко -->
                 <div class="video-card bg-zinc-900 rounded-3xl overflow-hidden">
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/watch?v=VcWg9EL1LHI" 
-                                title="Ломаченко найкращі моменти" 
-                                frameborder="0" 
+                        <iframe src="https://www.youtube.com/embed/u1BN82T44xk" 
+                                title="Василь Ломаченко найкращі моменти" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                 allowfullscreen></iframe>
                     </div>
-                    <div class="p-8">
-                        <h3 class="text-3xl font-bold mb-2">Василь Ломаченко — Технічний геній</h3>
-                        <p class="text-yellow-400 text-xl mb-4">Найкращі комбінації та моменти</p>
-                        <p class="text-zinc-400">Швидкість, точність і неймовірна техніка одного з найкращих боксерів сучасності.</p>
+                    <div class="p-6 md:p-8">
+                        <h3 class="text-2xl md:text-3xl font-bold mb-2">Василь Ломаченко — Технічний геній</h3>
+                        <p class="text-yellow-400 text-lg mb-3">Інсейн хайлайтс кар'єри</p>
+                        <p class="text-zinc-400 text-base">Швидкість, футворк і неймовірна техніка одного з найкращих боксерів покоління.</p>
                     </div>
                 </div>
 
-                <!-- Відео 3: Віталій Кличко -->
+                <!-- Віталій Кличко -->
                 <div class="video-card bg-zinc-900 rounded-3xl overflow-hidden">
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/watch?v=8ympXCbnhlY" 
-                                title="Віталій Кличко найкращі бої" 
-                                frameborder="0" 
+                        <iframe src="https://www.youtube.com/embed/BrTJ-Ut6INU" 
+                                title="Віталій Кличко найкращі нокаути" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                 allowfullscreen></iframe>
                     </div>
-                    <div class="p-8">
-                        <h3 class="text-3xl font-bold mb-2">Віталій Кличко — Залізний кулак</h3>
-                        <p class="text-yellow-400 text-xl mb-4">Найкращі нокаути та домінування</p>
-                        <p class="text-zinc-400">Легендарний чемпіон WBC, який тримав пояс майже 10 років.</p>
+                    <div class="p-6 md:p-8">
+                        <h3 class="text-2xl md:text-3xl font-bold mb-2">Віталій Кличко — Залізний кулак</h3>
+                        <p class="text-yellow-400 text-lg mb-3">Топ нокаути легенди</p>
+                        <p class="text-zinc-400 text-base">Чемпіон WBC, який домінував у суперважкій вазі майже 10 років.</p>
                     </div>
                 </div>
 
-                <!-- Відео 4: Володимир Кличко -->
+                <!-- Володимир Кличко -->
                 <div class="video-card bg-zinc-900 rounded-3xl overflow-hidden">
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/watch?v=iCw6NR2Rkx4" 
-                                title="Володимир Кличко найкращі моменти" 
-                                frameborder="0" 
+                        <iframe src="https://www.youtube.com/embed/28GMRDOodmk" 
+                                title="Володимир Кличко найкращі нокаути" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                 allowfullscreen></iframe>
                     </div>
-                    <div class="p-8">
-                        <h3 class="text-3xl font-bold mb-2">Володимир Кличко — Доктор Сталевий Молот</h3>
-                        <p class="text-yellow-400 text-xl mb-4">12 років домінування в суперважкій вазі</p>
-                        <p class="text-zinc-400">Один з найуспішніших важковаговиків в історії професійного боксу.</p>
+                    <div class="p-6 md:p-8">
+                        <h3 class="text-2xl md:text-3xl font-bold mb-2">Володимир Кличко — Доктор Сталевий Молот</h3>
+                        <p class="text-yellow-400 text-lg mb-3">12 років домінування</p>
+                        <p class="text-zinc-400 text-base">Один з найуспішніших важковаговиків в історії боксу.</p>
                     </div>
                 </div>
-
             </div>
 
-            <!-- Додатковий текст внизу -->
             <div class="mt-16 text-center">
-                <p class="text-yellow-400 text-xl mb-4"></p>
-                <p class="text-zinc-500 max-w-md mx-auto">
+                <p class="text-yellow-400 text-xl">Більше відео та повних боїв шукай на YouTube за запитом «Ukrainian boxing highlights»</p>
             </div>
         </div>
     </section>
 
     <footer class="bg-black py-12 border-t border-yellow-400">
-        <div class="max-w-7xl mx-auto px-6 text-center text-zinc-500">
-            <p>Слава Україні! 🥊🇺🇦</p>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center text-zinc-500">
+            <p class="text-lg">Слава Україні! 🥊🇺🇦</p>
         </div>
     </footer>
 
     <script>
-        function init() {
-            console.log('%c✅ Сторінка Відео завантажена успішно!', 'color:#FFD700; font-size:18px');
-        }
+        // Мобільне меню
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        let isOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isOpen = !isOpen;
+            if (isOpen) {
+                mobileMenu.classList.remove('hidden');
+                menuBtn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
 
         function playRingBell() {
             const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -199,7 +229,9 @@
             osc.stop(ctx.currentTime + 1.8);
         }
 
-        window.onload = init;
+        window.onload = () => {
+            console.log('%c✅ Сторінка Відео оптимізована + робочі відео!', 'color:#FFD700; font-size:16px; font-weight:bold');
+        };
     </script>
 </body>
 </html>
